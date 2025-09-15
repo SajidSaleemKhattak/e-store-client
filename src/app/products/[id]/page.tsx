@@ -21,9 +21,9 @@ const product: ProductType = {
 };
 
 export const generateMetadata = async ({
-  params,
+  params: _params,
 }: {
-  params: { id: string };
+  params?: any;
 }) => {
   // TODO:get the product from db
   // TEMPORARY
@@ -34,14 +34,16 @@ export const generateMetadata = async ({
 };
 
 const ProductPage = async ({
-  params,
+  params: _params,
   searchParams,
 }: {
-  params?: Promise<{ id: string }>;
-  searchParams?: Promise<{ color?: string; size?: string }>;
+  params?: any;
+  searchParams?: any;
 }) => {
-  const resolvedSearch = await (searchParams ??
-    Promise.resolve({} as { color?: string; size?: string }));
+  const resolvedSearch =
+    searchParams && typeof searchParams.then === "function"
+      ? await searchParams
+      : searchParams || ({} as { color?: string; size?: string });
   const size = resolvedSearch.size;
   const color = resolvedSearch.color;
 
