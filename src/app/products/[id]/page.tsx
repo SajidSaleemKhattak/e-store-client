@@ -24,7 +24,7 @@ type PageParams = Promise<{ id: string }>;
 type PageSearchParams = Promise<{ color?: string; size?: string }>;
 
 export const generateMetadata = async ({ params }: { params: PageParams }) => {
-  const { id } = await params;
+  const { id: _id } = await params;
   // TODO:get the product from db
   // TEMPORARY
   return {
@@ -40,7 +40,7 @@ const ProductPage = async ({
   params: PageParams;
   searchParams?: PageSearchParams;
 }) => {
-  const { id } = await params;
+  const { id: _id } = await params;
   const resolvedSearch = await (searchParams ??
     Promise.resolve({} as { color?: string; size?: string }));
   const size = resolvedSearch.size;
