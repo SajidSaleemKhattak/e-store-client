@@ -3,9 +3,11 @@ import ProductList from "@/components/ProductList";
 const ProductsPage = async ({
   searchParams,
 }: {
-  searchParams?: { category?: string };
+  searchParams?: Promise<{ category?: string }>;
 }) => {
-  const category = searchParams?.category || "";
+  const category =
+    (await (searchParams ?? Promise.resolve({} as { category?: string })))
+      .category || "";
   return (
     <div className="">
       <ProductList category={category} params="products" />
